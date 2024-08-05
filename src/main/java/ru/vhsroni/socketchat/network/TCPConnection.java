@@ -1,8 +1,9 @@
-package ru.vhsroni.network;
+package ru.vhsroni.socketchat.network;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
 
 public class TCPConnection {
 

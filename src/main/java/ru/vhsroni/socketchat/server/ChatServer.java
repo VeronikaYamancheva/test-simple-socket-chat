@@ -1,7 +1,8 @@
-package ru.vhsroni.chat.server;
+package ru.vhsroni.socketchat.server;
 
-import ru.vhsroni.network.TCPConnection;
-import ru.vhsroni.network.TCPConnectionListener;
+import ru.vhsroni.socketchat.network.TCPConnection;
+import ru.vhsroni.socketchat.network.TCPConnectionListener;
+
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -57,3 +58,4 @@ public class ChatServer implements TCPConnectionListener {
         for (TCPConnection connection : connections) connection.sendString(value);
     }
 }
+

@@ -1,4 +1,4 @@
-package ru.vhsroni.network;
+package ru.vhsroni.socketchat.network;
 
 public interface TCPConnectionListener {
 
@@ -7,3 +7,4 @@ public interface TCPConnectionListener {
     void onDisconnect(TCPConnection tcpConnection);
     void onException(TCPConnection tcpConnection, Exception e);
 }
+
