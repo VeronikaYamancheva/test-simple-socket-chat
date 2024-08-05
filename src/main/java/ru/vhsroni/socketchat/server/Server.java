@@ -2,21 +2,21 @@ package ru.vhsroni.socketchat.server;
 
 import ru.vhsroni.socketchat.network.TCPConnection;
 import ru.vhsroni.socketchat.network.TCPConnectionListener;
-
-
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class ChatServer implements TCPConnectionListener {
+public class Server implements TCPConnectionListener {
 
     private final ArrayList<TCPConnection> connections = new ArrayList<>();
 
     public static void main(String[] args) {
-        new ChatServer();
+        new Server();
     }
 
-    private ChatServer() {
+    private Server() {
         System.out.println("server running...");
         try (ServerSocket serverSocket = new ServerSocket(8189)) {
             while(true) {
@@ -32,28 +32,29 @@ public class ChatServer implements TCPConnectionListener {
     }
 
     @Override
-    public synchronized void onConnectionReady(TCPConnection tcpConnection) {
+    public synchronized void establishConnection(TCPConnection tcpConnection) {
         connections.add(tcpConnection);
-        sendAllConnections("client connected: " + tcpConnection);
+        sendToAllConnections("client connected: " + tcpConnection);
     }
 
     @Override
-    public  synchronized void onReceiveString(TCPConnection tcpConnection, String value) {
-        sendAllConnections(value);
+    public synchronized void receiveMessage(TCPConnection tcpConnection, String value) {
+        String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        sendToAllConnections("<" + time + "> " + value);
     }
 
     @Override
-    public synchronized void onDisconnect(TCPConnection tcpConnection) {
+    public synchronized void brokeConnection(TCPConnection tcpConnection) {
         connections.remove(tcpConnection);
-        sendAllConnections("client disconnected: " + tcpConnection);
+        sendToAllConnections("client disconnected: " + tcpConnection);
     }
 
     @Override
-    public synchronized void onException(TCPConnection tcpConnection, Exception e) {
+    public synchronized void throwException(TCPConnection tcpConnection, Exception e) {
         System.out.println("TCPConnection Exception: " + e);
     }
 
-    private void sendAllConnections(String value) {
+    private void sendToAllConnections(String value) {
         System.out.println(value);
         for (TCPConnection connection : connections) connection.sendString(value);
     }

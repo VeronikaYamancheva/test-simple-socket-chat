@@ -2,9 +2,9 @@ package ru.vhsroni.socketchat.network;
 
 public interface TCPConnectionListener {
 
-    void onConnectionReady(TCPConnection tcpConnection);
-    void onReceiveString(TCPConnection tcpConnection, String value);
-    void onDisconnect(TCPConnection tcpConnection);
-    void onException(TCPConnection tcpConnection, Exception e);
+    void establishConnection(TCPConnection tcpConnection);
+    void receiveMessage(TCPConnection tcpConnection, String value);
+    void brokeConnection(TCPConnection tcpConnection);
+    void throwException(TCPConnection tcpConnection, Exception e);
 }
 
